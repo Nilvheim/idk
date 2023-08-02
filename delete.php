@@ -1,0 +1,39 @@
+<?php
+// Menghubungkan ke database
+$host = "nama_host";
+$username = "nama_pengguna";
+$password = "kata_sandi";
+$database = "nama_database";
+
+$$conn = mysqli_connect("localhost", "root", "", "tatl");
+if (!$conn) {
+    die("Koneksi database gagal: " . mysqli_connect_error());
+}
+
+// Fungsi untuk menghapus data dari tabel dosen
+function hapusData($conn, $tabel, $nim) {
+    $sql = "DELETE FROM $tabel WHERE nim='$nim'";
+    if (mysqli_query($conn, $sql)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Mendapatkan nilai tabel dan nim dari URL
+$tabel = $_GET['tabel'];
+$nim = $_GET['nim'];
+
+// Proses hapus data
+if (hapusData($conn, $tabel, $nim)) {
+    echo "<p>Data berhasil dihapus!</p>";
+} else {
+    echo "<p>Data gagal dihapus!</p>";
+}
+
+// Redirect kembali ke halaman utama
+header("Location: admin.php");
+
+// Menutup koneksi database
+mysqli_close($conn);
+?>
