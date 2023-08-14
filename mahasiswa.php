@@ -1,15 +1,6 @@
 <?php
 // Menghubungkan ke database
-$host = "nama_host";
-$username = "nama_pengguna";
-$password = "kata_sandi";
-$database = "nama_database";
-
-$conn = mysqli_connect("localhost", "root", "", "tatl");
-if (!$conn) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
-
+require_once 'koneksi.php';
 // Mengecek apakah ada data yang dikirim dari form
 if (isset($_POST['nama']) && isset($_POST['nim']) && isset($_POST['topik_ta']) && isset($_POST['dosen']) && isset($_POST['nip']) && isset($_POST['bidang_keahlian'])) {
     $nama = $_POST['nama'];
@@ -32,7 +23,6 @@ if (isset($_POST['nama']) && isset($_POST['nim']) && isset($_POST['topik_ta']) &
 }
 
 // Menutup koneksi ke database
-mysqli_close($conn);
 
 ?>
 
@@ -123,7 +113,7 @@ mysqli_close($conn);
                 <textarea name="topik_ta" id="topik_ta" required></textarea>
             </div>
             
-            <div class="form-group">
+<div class="form-group">
     <label for="dosen">Dosen:</label>
 
     <select name="dosen" id="dosen">
@@ -136,13 +126,14 @@ mysqli_close($conn);
                 $coloumn1Value = $row["nama"];
                 $coloumn2Value = $row["nip"];
                 // echo "Result";
-                echo "<option value='$coloumn1Value' > $coloumn2Value  </option>";
+                echo "<option value='$coloumn2Value' > $coloumn1Value  </option>";
                         }
            }
           
            else {
             echo "No result";
         }
+        mysqli_close($conn);
     ?>
         <!-- Tambahkan opsi dropdown untuk dosen lainnya -->
     </select>
@@ -151,16 +142,6 @@ mysqli_close($conn);
 
 </div>
 
-            
-            <div class="form-group">
-                <label for="nip">NIP:</label>
-                <input type="text" name="nip" id="nip" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="bidang_keahlian">Bidang Keahlian:</label>
-                <input type="text" name="bidang_keahlian" id="bidang_keahlian" required>
-            </div>
             
             <div class="form-group">
                 <button type="submit=" value="Proses">Send</button>
